@@ -1,5 +1,7 @@
 import java.io.* ;
 import java.net.* ;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.* ;
 
 public final class WebServer
@@ -67,6 +69,30 @@ final class HttpRequest implements Runnable
         }
     }
 
+    private static String contentType(String fileName) 
+    {
+        try {
+            return Files.probeContentType(Paths.get(fileName));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return "application/octet-stream";
+    }
+
+    public static void sendBytes(FileInputStream fis, OutputStream os)
+    throws Exception
+    {
+        
+        // Construct a 1K buffer to hold bytes on their way to the socket. 
+        byte[] buffer = new byte[1024];
+        int bytes = 0;
+
+        // Copy requested file into the socket's output stream.
+        while((bytes = fis.read(buffer)) != -1 ) {
+            os.write(buffer, 0, bytes);
+        }
+    }
+
     public void processRequest() throws Exception
     {
         //Get a reference to the socket's input and output streams. 
@@ -77,6 +103,7 @@ final class HttpRequest implements Runnable
         //Set up input stream filters. 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
         // Get the request line of the HTTP request message. 
         String requestLine = br.readLine();
 
@@ -90,8 +117,57 @@ final class HttpRequest implements Runnable
             System.out.println(headerLine);
         }
 
-        os.close();
+        // PART B
+
+        // Extract the filename from the request line. 
+        StringTokenizer tokens = new StringTokenizer(requestLine);
+        tokens.nextToken(); // Skip over the method, which should be "GET"
+        String fileName = tokens.nextToken();
+
+        //Prepend a "." so that file request is within the current directory. 
+        fileName = "." + fileName;
+
+        // Open the requested file.
+        FileInputStream fis = null;
+        boolean fileExists = true;
+        try {
+            fis = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            fileExists = false;
+        }
+
+        // Construct the response message
+        String statusLine = "";
+        String contentTypeLine = "";
+        String entityBody = "";
+        if (fileExists) {
+            statusLine = "HTTP/1.0 200 OK" + CRLF;
+            contentTypeLine = "Content-Type: " +
+                contentType( fileName ) + CRLF;
+        } else {
+            statusLine = "HTTP/1.0 404 Not Found" + CRLF;
+            contentTypeLine = "Content-Type: text/html" + CRLF;
+            entityBody = "<HTML>" +
+                "<HEAD><TITLE>Not Found</TITLE><HEAD>" +
+                "<BODY><h1>4&#x2639;4</h1>Not Found</BODY><HTML>";
+        }
+
+        bw.write(statusLine);
+        bw.write(contentTypeLine);
+        bw.write(CRLF);
+        bw.write(entityBody);
+        bw.flush();
+
+        // Send the entity body. 
+        if (fileExists) {
+            sendBytes(fis, os);
+            //OutputStreamWriter ostest = new OutputStreamWriter(os);
+            fis.close();
+        }
+
         br.close();
+        bw.close();
+        os.close();
         socket.close();
     }
 }
