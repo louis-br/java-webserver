@@ -1,4 +1,5 @@
 all:
-	javac WebServer.java
+	rm -f WebServer.class
+	javac -d classes WebServer.java
 run: all
-	java WebServer.java
+	cd classes && java WebServer
