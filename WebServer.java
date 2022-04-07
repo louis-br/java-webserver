@@ -10,7 +10,7 @@ public final class WebServer
     {
         // Set the port number. 
         int port = 6789; 
-        System.out.println("Hello world!");
+        System.out.println("Listening on port " + port);
 
         // Establish the listen socket.
         ServerSocket serverSocket = new ServerSocket(port);
