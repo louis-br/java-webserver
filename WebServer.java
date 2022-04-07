@@ -161,7 +161,6 @@ final class HttpRequest implements Runnable
         // Send the entity body. 
         if (fileExists) {
             sendBytes(fis, os);
-            //OutputStreamWriter ostest = new OutputStreamWriter(os);
             fis.close();
         }
 
