@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* ******************************************************************
  ALTERNATING BIT AND GO-BACK-N NETWORK EMULATOR: VERSION 1.1  J.F.Kurose
@@ -38,13 +39,64 @@ struct pkt {
 /********* STUDENTS WRITE THE NEXT SEVEN ROUTINES *********/
 
 
+void tolayer3(int isBside, struct pkt packet);
+void tolayer5(int AorB, char datasent[20]);
+void starttimer(int AorB, float increment);
+void stoptimer(int AorB);
 
+struct {int waitForACK; int expectedACK; int timeout; struct pkt lastPacket;} 
+A_STATE = {
+  .waitForACK = 0,
+  .expectedACK = 1,
+  .timeout = 40,
+  .lastPacket = {}
+};
+
+struct {int seqnum;} B_STATE = {
+  .seqnum = 0
+};
+
+int get_checksum(struct pkt packet) {
+  int sum = 0;
+  sum += packet.seqnum;
+  sum += packet.acknum;
+  for (int i = 0; i < 20; i++) {
+    sum += packet.payload[i];
+  }
+  return sum;
+}
+
+int valid_checksum(struct pkt packet) {
+  int checksum = get_checksum(packet);
+  if (packet.checksum != checksum) {
+    printf("Drop: got checksum: %d, expected: %d", packet.checksum, checksum);
+    return 0;
+  }
+  return 1;
+}
 
 /* called from layer 5, passed the data to be sent to other side */
 void A_output(message)
   struct msg message;
 {
-
+  if (A_STATE.waitForACK) {
+    printf("Drop: waiting for ack %d\n", A_STATE.expectedACK);
+    return;
+  }
+  A_STATE.waitForACK = 1;
+  A_STATE.expectedACK = !A_STATE.expectedACK;
+  struct pkt packet = {
+    .seqnum = A_STATE.expectedACK,
+    .acknum = 0,
+    .checksum = 0,
+    .payload = ""
+  };
+  printf("Sending packet with seqnum: %d\n", packet.seqnum);
+  memcpy(packet.payload, message.data, 20);
+  packet.checksum = get_checksum(packet);
+  A_STATE.lastPacket = packet;
+  tolayer3(0, packet);
+  starttimer(0, A_STATE.timeout);
 }
 
 void B_output(message)  /* need be completed only for extra credit */
@@ -57,14 +109,25 @@ void B_output(message)  /* need be completed only for extra credit */
 void A_input(packet)
   struct pkt packet;
 {
-
+  if (!valid_checksum(packet)) {
+    return;
+  }
+  if (packet.acknum != A_STATE.expectedACK) {
+    printf("Drop: got acknum: %d, expected: %d\n", packet.acknum, A_STATE.expectedACK);
+    return;
+  }
+  printf("Got ACK: %d\n", A_STATE.expectedACK);
+  stoptimer(0);
+  A_STATE.waitForACK = 0;
 }
 
 /* called when A's timer goes off */
 void A_timerinterrupt()
 {
-
-}  
+  printf("Packet drop detected: resending\n");
+  tolayer3(0, A_STATE.lastPacket);
+  starttimer(0, A_STATE.timeout);
+}
 
 /* the following routine will be called once (only) before any other */
 /* entity A routines are called. You can use it to do any initialization */
@@ -72,6 +135,17 @@ void A_init()
 {
 }
 
+struct pkt get_ack(int acknum) {
+  printf("Sending ACK: %d\n", acknum);
+  struct pkt packet = {
+    .acknum = acknum,
+    .checksum = 0,
+    .payload = "",
+    .seqnum = 0
+  };
+  packet.checksum = get_checksum(packet);
+  return packet;
+}
 
 /* Note that with simplex transfer from a-to-B, there is no B_output() */
 
@@ -79,6 +153,19 @@ void A_init()
 void B_input(packet)
   struct pkt packet;
 {
+  if (!valid_checksum(packet)) {
+    return;
+  }
+  if (packet.seqnum != B_STATE.seqnum) {
+    printf("ACK: got seqnum: %d, expected: %d\n", packet.seqnum, B_STATE.seqnum);
+    tolayer3(1, get_ack(packet.seqnum));
+    return;
+  }
+  char payload[20] = "";
+  memcpy(payload, packet.payload, 20);
+  tolayer5(1, payload);
+  tolayer3(1, get_ack(B_STATE.seqnum));
+  B_STATE.seqnum = !B_STATE.seqnum;
 }
 
 /* called when B's timer goes off */
