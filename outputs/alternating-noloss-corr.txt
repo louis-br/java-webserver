@@ -1,0 +1,269 @@
+gcc alternating.c -o alternating
+gcc gobackn.c -o gobackn
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1870.573975,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 1876.039062,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 1881.270630,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 3512.483887,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 3514.504395,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+          TOLAYER3: packet being corrupted
+
+EVENT time: 3518.971680,  type: 2, fromlayer3  entity: 0
+[A] Drop ACK: got checksum: 1, expected: 91
+
+EVENT time: 3612.483887,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 3617.347412,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+
+EVENT time: 3623.645752,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 5209.402832,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 5218.421387,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 5222.484863,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 5921.101074,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+          TOLAYER3: packet being corrupted
+
+EVENT time: 5922.884766,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2001, expected: 1002000
+
+EVENT time: 6021.101074,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 6025.259766,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 6030.600098,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 6457.301758,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 6467.061035,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2020, expected: 1002019
+
+EVENT time: 6557.301758,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 6563.147461,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2020, expected: 2009
+
+EVENT time: 6657.301758,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 6662.880371,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2020, expected: 2009
+
+EVENT time: 6757.301758,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 6763.551758,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2020, expected: 2009
+
+EVENT time: 6819.669922,  type: 1, fromlayer5  entity: 0
+[A] Waiting for ack 0: message dropped
+
+EVENT time: 6857.301758,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 6860.179688,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 6863.841309,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 7465.109863,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 7466.387207,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 7472.004883,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 9294.613281,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 9296.645508,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 9298.735352,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 9521.740234,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 9524.756836,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 9529.510742,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 9769.012695,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 9774.997070,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 9782.859375,  type: 2, fromlayer3  entity: 0
+[A] Drop ACK: got checksum: 0, expected: 999999
+
+EVENT time: 9869.012695,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 9876.835938,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 0, expected: 1
+[B] Sending ACK: 0
+
+EVENT time: 9884.936523,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 10098.429688,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 10104.094727,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 10110.791992,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 11837.519531,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 11847.007812,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 11849.512695,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 12838.175781,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+          TOLAYER3: packet being corrupted
+
+EVENT time: 12845.955078,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2181, expected: 2162
+
+EVENT time: 12938.175781,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+          TOLAYER3: packet being corrupted
+
+EVENT time: 12944.077148,  type: 2, fromlayer3  entity: 1
+[B] Drop packet: got checksum: 2181, expected: 2162
+
+EVENT time: 13038.175781,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 13046.999023,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+          TOLAYER3: packet being corrupted
+
+EVENT time: 13053.780273,  type: 2, fromlayer3  entity: 0
+[A] Drop ACK: got checksum: 1, expected: 91
+
+EVENT time: 13138.175781,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 13147.585938,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+
+EVENT time: 13156.843750,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 14623.003906,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 14627.450195,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 14628.512695,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 14964.185547,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 14966.338867,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 14969.006836,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 15407.827148,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 15416.950195,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 15424.896484,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 16055.108398,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 16061.379883,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 16067.061523,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 17522.222656,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 17525.544922,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+          TOLAYER3: packet being corrupted
+
+EVENT time: 17532.312500,  type: 2, fromlayer3  entity: 0
+[A] Drop ACK: got checksum: 0, expected: 90
+
+EVENT time: 17622.222656,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 17625.941406,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 0, expected: 1
+[B] Sending ACK: 0
+
+EVENT time: 17630.812500,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 19464.158203,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 19469.869141,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 19474.701172,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 21319.550781,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 21322.039062,  type: 2, fromlayer3  entity: 1
+ Simulator terminated at time 21322.039062
+ after sending 20 msgs from layer5

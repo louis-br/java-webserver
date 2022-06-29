@@ -1,0 +1,263 @@
+gcc alternating.c -o alternating
+gcc gobackn.c -o gobackn
+-----  Stop and Wait Network Simulator Version 1.1 -------- 
+
+Enter the number of messages to simulate: Enter  packet loss probability [enter 0.0 for no loss]:Enter packet corruption probability [0.0 for no corruption]:Enter average time between messages from sender's layer5 [ > 0.0]:Enter TRACE:
+EVENT time: 1870.573975,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 1876.039062,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 1881.270630,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 3512.483887,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 3514.504395,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 3518.971680,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 5209.402832,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+          TOLAYER3: packet being lost
+
+EVENT time: 5309.402832,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 5318.831055,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 5326.293945,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 6091.731934,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 6094.462402,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 6096.828613,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 7209.431641,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+          TOLAYER3: packet being lost
+
+EVENT time: 7309.431641,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+          TOLAYER3: packet being lost
+
+EVENT time: 7409.431641,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 7415.680664,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 7417.161133,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 8226.498047,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 8232.858398,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 8326.498047,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 8327.556641,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 8426.498047,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 8431.772461,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 8526.498047,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 8535.279297,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 8626.498047,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+          TOLAYER3: packet being lost
+
+EVENT time: 8726.498047,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 8731.317383,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+
+EVENT time: 8740.713867,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 9301.602539,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 9310.513672,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 9319.905273,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 10661.353516,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 10663.332031,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 10665.138672,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 10944.146484,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 10950.158203,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 10956.390625,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 12442.578125,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 12448.087891,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 12457.416992,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 13436.490234,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 13438.013672,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 13447.448242,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 13592.987305,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 13596.705078,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 13601.401367,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 14346.867188,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 14354.654297,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 14358.453125,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 14734.698242,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 14740.957031,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 14834.698242,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+          TOLAYER3: packet being lost
+
+EVENT time: 14934.698242,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 14940.599609,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 15034.698242,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 15043.521484,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+
+EVENT time: 15050.302734,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 15247.371094,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+          TOLAYER3: packet being lost
+
+EVENT time: 15347.371094,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 0
+
+EVENT time: 15352.618164,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 15361.561523,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 15587.122070,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 15596.444336,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 15687.122070,  type: 0, timerinterrupt   entity: 0
+[A] Timeout: resending 1
+
+EVENT time: 15690.118164,  type: 2, fromlayer3  entity: 1
+[B] Unexpected seqnum: 1, expected: 0
+[B] Sending ACK: 1
+
+EVENT time: 15698.374023,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 15810.007812,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 15813.920898,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 15818.458984,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 16180.577148,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+
+EVENT time: 16188.178711,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 1
+
+EVENT time: 16197.309570,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 1
+
+EVENT time: 17724.091797,  type: 1, fromlayer5  entity: 0
+[A] Sending: 0
+
+EVENT time: 17733.830078,  type: 2, fromlayer3  entity: 1
+[B] Sending ACK: 0
+
+EVENT time: 17736.103516,  type: 2, fromlayer3  entity: 0
+[A] Got ACK: 0
+
+EVENT time: 18764.416016,  type: 1, fromlayer5  entity: 0
+[A] Sending: 1
+          TOLAYER3: packet being lost
+
+EVENT time: 18864.416016,  type: 0, timerinterrupt   entity: 0
+ Simulator terminated at time 18864.416016
+ after sending 20 msgs from layer5

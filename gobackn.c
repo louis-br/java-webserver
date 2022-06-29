@@ -39,35 +39,131 @@ struct pkt {
 /********* STUDENTS WRITE THE NEXT SEVEN ROUTINES *********/
 
 
-void tolayer3(int isBside, struct pkt packet);
+void tolayer3(int AorB, struct pkt packet);
 void tolayer5(int AorB, char datasent[20]);
 void starttimer(int AorB, float increment);
 void stoptimer(int AorB);
 
-int get_checksum(struct pkt packet) {
+#define BUFFER_SIZE 64
+
+struct {int seqnum; struct pkt *buffer; int windowBase; int windowSize; int timeout; int timerStarted;} 
+A_STATE = {
+  .seqnum = 0,
+  .buffer = NULL,
+  .windowBase = 0,
+  .windowSize = 5,
+  .timeout = 2000,
+  .timerStarted = 0
+};
+
+struct {int acknum;} B_STATE = {
+  .acknum = -1
+};
+
+void set_timer(int enabled) {
+  if (A_STATE.timerStarted) {
+    A_STATE.timerStarted = 0;
+    stoptimer(0);
+  }
+  if (enabled) {
+    A_STATE.timerStarted = 1;
+    starttimer(0, A_STATE.timeout);
+  }
+}
+
+int get_checksum(struct pkt *packet) {
   int sum = 0;
-  sum += packet.seqnum;
-  sum += packet.acknum;
+  sum += packet->seqnum;
+  sum += packet->acknum;
+  char *payload = packet->payload;
   for (int i = 0; i < 20; i++) {
-    sum += packet.payload[i];
+    sum += payload[i];
   }
   return sum;
 }
 
-int valid_checksum(struct pkt packet) {
+int valid_checksum(int AorB, struct pkt *packet) {
   int checksum = get_checksum(packet);
-  if (packet.checksum != checksum) {
-    printf("Drop: got checksum: %d, expected: %d", packet.checksum, checksum);
+  if (packet->checksum != checksum) {
+    printf("[%s] Drop %s: got checksum: %d, expected: %d\n", AorB ? "B" : "A", AorB ? "packet" : "ACK", packet->checksum, checksum);
     return 0;
   }
   return 1;
+}
+
+int buffer_index(int n) {
+  return n % BUFFER_SIZE;
+}
+
+int window_index(int n) {
+  n = buffer_index(n);
+  int base = A_STATE.windowBase;
+  int size = A_STATE.windowSize;
+  int last = buffer_index(base + size);
+  if (last > base && (n > last || n < base) || (n > last && n < base)) {
+    return -1;
+  }
+  return n;
+}
+
+void send_window(int base, int resend) {
+  for (int index = base; index != -1; index = window_index(index + 1)) {
+    if (index == A_STATE.seqnum) {
+      break;
+    }
+    printf("[A] %s %d\n", resend ? "Timeout: resending" : "Sending: ", index);
+    struct pkt *packet = &A_STATE.buffer[index];
+    tolayer3(0, *packet);
+    if (index == base) {
+      set_timer(1);
+    }
+  }
+}
+
+struct pkt new_ack(int acknum) {
+  printf("[B] Sending ACK: %d\n", acknum);
+  struct pkt packet = {
+    .acknum = acknum,
+    .checksum = 0,
+    .payload = "",
+    .seqnum = 0
+  };
+  packet.checksum = get_checksum(&packet);
+  return packet;
+}
+
+void new_packet(struct pkt *packet, char *data, int dataSize) {
+  memcpy(packet->payload, data, dataSize);
+  packet->checksum = get_checksum(packet);
 }
 
 /* called from layer 5, passed the data to be sent to other side */
 void A_output(message)
   struct msg message;
 {
-
+  if (A_STATE.seqnum + 1 == A_STATE.windowBase) {
+    printf("[A] Buffer full: message dropped\n");
+    return;
+  }
+  int seqnum = A_STATE.seqnum;
+  struct pkt packet = {
+    .seqnum = seqnum,
+    .acknum = 0,
+    .checksum = 0,
+    .payload = ""
+  };
+  new_packet(&packet, message.data, 20);
+  A_STATE.buffer[seqnum] = packet;
+  A_STATE.seqnum = buffer_index(A_STATE.seqnum + 1);
+  if (window_index(seqnum) == -1) {
+    printf("[A] Window full: buffering\n");
+    return;
+  }
+  printf("[A] Sending: %d\n", packet.seqnum);
+  tolayer3(0, packet);
+  if (seqnum == A_STATE.windowBase) {
+    set_timer(1);
+  }
 }
 
 void B_output(message)  /* need be completed only for extra credit */
@@ -80,33 +176,37 @@ void B_output(message)  /* need be completed only for extra credit */
 void A_input(packet)
   struct pkt packet;
 {
-  if (!valid_checksum(packet)) {
+  if (!valid_checksum(0, &packet)) {
     return;
+  }
+  int index = window_index(packet.acknum);
+  if (index == -1) {
+    printf("[A] Drop ACK: acknum outside window\n");
+    return;
+  }
+  printf("[A] Got ACK: %d\n", index);
+  int last = buffer_index(A_STATE.windowBase + A_STATE.windowSize);
+  A_STATE.windowBase = buffer_index(index + 1);
+  if (last < A_STATE.seqnum) {
+    send_window(window_index(last), 0);
+  }
+  if (A_STATE.seqnum == A_STATE.windowBase) {
+    set_timer(0);
   }
 }
 
 /* called when A's timer goes off */
 void A_timerinterrupt()
 {
-
+  A_STATE.timerStarted = 0;
+  send_window(A_STATE.windowBase, 1);
 }  
 
 /* the following routine will be called once (only) before any other */
 /* entity A routines are called. You can use it to do any initialization */
 void A_init()
 {
-}
-
-struct pkt get_ack(int acknum) {
-  printf("Sending ACK: %d\n", acknum);
-  struct pkt packet = {
-    .acknum = acknum,
-    .checksum = 0,
-    .payload = "",
-    .seqnum = 0
-  };
-  packet.checksum = get_checksum(packet);
-  return packet;
+  A_STATE.buffer = malloc(sizeof(struct pkt)*BUFFER_SIZE);
 }
 
 /* Note that with simplex transfer from a-to-B, there is no B_output() */
@@ -115,9 +215,16 @@ struct pkt get_ack(int acknum) {
 void B_input(packet)
   struct pkt packet;
 {
-  if (!valid_checksum(packet)) {
+  if (!valid_checksum(1, &packet)) {
+    tolayer3(1, new_ack(B_STATE.acknum));
     return;
   }
+  int seqnum = packet.seqnum;
+  if (seqnum == B_STATE.acknum + 1 || seqnum == 0 && B_STATE.acknum == (BUFFER_SIZE - 1)) {
+    B_STATE.acknum = seqnum;
+    tolayer5(1, packet.payload);
+  }
+  tolayer3(1, new_ack(B_STATE.acknum));
 }
 
 /* called when B's timer goes off */
